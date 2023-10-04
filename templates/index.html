@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+    <!-- Bootstrap CSS and JS links -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h1 class="text-center">URL Shortener</h1>
+                    </div>
+                    <div class="card-body">
+                        <!-- Shorten URL Form -->
+                        <form method="POST">
+                            <div class="form-group">
+                                <label for="original_url">Enter your URL:</label>
+                                <input type="text" class="form-control" name="original_url" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Shorten</button>
+                        </form>
+
+                        {% if short_url %}
+                            <p class="mt-3">Short URL: <a href="{{ short_url }}" target="_blank">{{ short_url }}</a></p>
+                        {% endif %}
+
+                        <!-- Retrieve Long URL Form -->
+                        <form method="GET" action="/retrieve">
+                            <div class="form-group mt-3">
+                                <label for="short_url">Enter short URL:</label>
+                                <input type="text" class="form-control" name="short_url" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Retrieve Long URL</button>
+                        </form>
+
+                        {% if retrieved_url %}
+                            <p class="mt-3">Original URL: <a href="{{ retrieved_url }}" target="_blank">{{ retrieved_url }}</a></p>
+                        {% endif %}
+
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <ul class="mt-3">
+                                    {% for message in messages %}
+                                        <li class="text-danger">{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
